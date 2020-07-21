@@ -48,26 +48,7 @@ static __strong NSMutableArray *allSerialPorts;
 @property (nonatomic) dispatch_source_t _deviceSource;
 #endif
 
-
 @end
-
-/*
-print("Started:\n")
-var masterFile: FileHandle?
-
-var masterFD: Int32 = 0
-masterFD = open("/dev/cu.wchusbserial1460",O_RDWR|O_NONBLOCK)
-grantpt(masterFD)
-unlockpt(masterFD)
-masterFile = FileHandle.init(fileDescriptor: masterFD)
-
-masterFile!.write("tty\u{0D}".data(using: String.Encoding.utf8)!)
-sleep(1)
-
-let data1 = masterFile!.availableData
-let strData1 = String(data: data1, encoding: String.Encoding.utf8)!
-print("Output: "+strData1)
-*/
 
 @implementation POSIXSerialPort
 
