@@ -414,6 +414,8 @@ static __strong NSMutableArray *allSerialPorts;
                         if(ds.offset != offset || ds.size != size) {
                             self._data = dispatch_data_create_map(dispatch_data_create_subrange(region, offset+ds.size+(ds.offset-offset)
                                 , size - (ds.size + (ds.offset-offset))),nil,nil);
+                        } else {
+                            self._data = nil; // Release the data
                         }
                     });
                 });

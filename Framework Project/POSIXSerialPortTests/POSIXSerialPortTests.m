@@ -30,6 +30,7 @@
 
 @property (nullable,weak) XCTestExpectation *portOpen;
 @property (nullable,weak) XCTestExpectation *firstWrite;
+@property (nullable,weak) XCTestExpectation *nextPacket;
 @property (nullable,weak) XCTestExpectation *readWriteTestComplete;
 @end
 
@@ -40,6 +41,7 @@
         , data );
     if(self.readWriteTestComplete !=nil ) [self.readWriteTestComplete fulfill];
     if(self.firstWrite !=nil ) [self.firstWrite fulfill];
+    if(self.nextPacket !=nil ) [self.nextPacket fulfill];
 }
 - (DataSegment)serialPort:(POSIXSerialPort *)serialPort nextDataSegmentValidIn:(NSData *)data;
 {
@@ -110,20 +112,24 @@
     self.pDelegate.portOpen = [self expectationWithDescription:@"Port open"];
     self.pDelegate.firstWrite = [self expectationWithDescription:@"Read incomplete packet"];
     self.pDelegate.firstWrite.expectedFulfillmentCount = 1;
+    self.pDelegate.nextPacket = [self expectationWithDescription:@"Next complete packet"];
+    self.pDelegate.nextPacket.expectedFulfillmentCount = 2;
     self.pDelegate.readWriteTestComplete = [self expectationWithDescription:@"Read complete"];
-    self.pDelegate.readWriteTestComplete.expectedFulfillmentCount = 2;
+    self.pDelegate.readWriteTestComplete.expectedFulfillmentCount = 3;
 
-    NSData *sendData = [@"FEED BEEF" dataUsingEncoding:NSUTF8StringEncoding];
-    
     [self.port open];
     [self waitForExpectations:@[self.pDelegate.portOpen] timeout:5];
 
+    NSData *sendData = [@"FEED BEEF" dataUsingEncoding:NSUTF8StringEncoding];
     [self.port sendData:sendData];
     [self waitForExpectations:@[self.pDelegate.firstWrite] timeout:10];
 
     sendData = [@" " dataUsingEncoding:NSUTF8StringEncoding];
     [self.port sendData:sendData];
- 
+    [self waitForExpectations:@[self.pDelegate.nextPacket] timeout:15];
+
+    sendData = [@"EAAD " dataUsingEncoding:NSUTF8StringEncoding];
+    [self.port sendData:sendData];
     [self waitForExpectations:@[self.pDelegate.readWriteTestComplete] timeout:20];
 
     [self.port close];
