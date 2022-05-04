@@ -1,6 +1,6 @@
 # Macos (Darwin/Mach) POSIXSerialPort
 
-This Serial port framwork is Objective-C and Swift friendly (tested on V4.2) in the same way that ORSSerialPort is commonly used (see https://github.com/armadsen/ORSSerialPort).  Of note is this other project, never used it but it also follows the same vein of serial device, I include it becasue it does not come up in searches much but looks and may even be the same -- it is 100% swift implementation -- https://github.com/MichMich/nRF8001-Swift
+This Serial port framwork is Objective-C and Swift friendly (tested on V4.2, V5.0) in the same way that ORSSerialPort is commonly used (see https://github.com/armadsen/ORSSerialPort).  Of note is this other project, never used it but it also follows the same vein of serial device, I include it becasue it does not come up in searches much but looks and may even be the same -- it is 100% swift implementation -- https://github.com/MichMich/nRF8001-Swift
 
 Some key differences are :  
 
