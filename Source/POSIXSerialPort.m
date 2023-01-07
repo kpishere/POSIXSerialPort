@@ -238,7 +238,7 @@ static __strong NSMutableArray *allSerialPorts;
             options.c_cflag |= CS5;
             break;
         case 6:
-            options.c_cflag |= CS5;
+            options.c_cflag |= CS6;
             break;
         case 7:
             options.c_cflag |= CS7;
